@@ -1,0 +1,42 @@
+   /*
+   General CSS setup for the site.
+   */
+
+   html {
+        font-size: 100%;
+        box-sizing: border-box;
+        -webkit-font-smoothing: antialiased;
+        margin: 0px;
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+    }
+    
+    *,
+    *::before,
+    *::after {
+        box-sizing: inherit;
+    }
+    
+    body {
+        display: flex;
+        font-family: Arial, Helvetica, sans-serif;
+        line-height: 1.3;
+        margin: 0px;
+        padding: 0px;
+        background-color: #ffffff;
+        color: #3f3f3f;
+        width: 100%;
+        height: 100%;
+    }
+
+/* Changes the highlight color of the current selection */
+    ::selection {
+        background: #8bffae;
+        color: #3f3f3f;
+    }
+/* Same as above but for firefox */
+    ::-moz-selection {
+        background: #8bffae;
+        color: #3f3f3f;
+    }

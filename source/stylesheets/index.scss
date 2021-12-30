@@ -1,0 +1,36 @@
+@import "globals";
+
+#blurryDiv {
+    position: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: #eeece1;
+    color: #3f3f3f;
+    animation: focusIn 10s infinite;
+}
+
+@keyframes focusIn {
+    20% {
+        filter:blur(8px)
+          }
+    40%, 100% {
+        filter:blur(0px)
+          }
+}
+
+#blurryDiv #shadowDrop {
+    position: relative;
+    padding: 10%;
+    width: 500px;
+    height: 200px;
+    background-color: white;
+    color: #3f3f3f;
+    transition: filter 0.5s ease-in-out;
+    
+}
+#blurryDiv #shadowDrop:hover {
+  filter: drop-shadow(3mm 3mm 0 #3f3f3f);
+}
