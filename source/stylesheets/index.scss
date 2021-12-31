@@ -1,5 +1,14 @@
 @import "globals";
 
+body {
+  background-color: #d9d9d9 !important;
+}
+
+body:focus {
+  background-color: #868686 !important;
+}
+
+
 #blurryDiv {
     position: flex;
     flex-direction: column;
@@ -7,8 +16,10 @@
     align-items: center;
     width: 100%;
     height: 100%;
-    background-color: #eeece1;
     color: #3f3f3f;
+}
+
+#blurryDiv:hover {
     animation: focusIn 10s infinite;
 }
 
@@ -33,4 +44,14 @@
 }
 #blurryDiv #shadowDrop:hover {
   filter: drop-shadow(3mm 3mm 0 #3f3f3f);
+}
+
+p {
+    font-size: 1.5em;
+    font-weight: 400;
+    line-height: 1.3;
+    margin: 0px;
+    padding: 0px;
+    text-align: center;
+    color: #daff00;
 }
