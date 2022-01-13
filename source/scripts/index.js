@@ -1,4 +1,5 @@
-/*
+
+
 const canvas = document.getElementById("blurCanvas");
 const ctx = canvas.getContext("2d");
 let coord = { x: 0, y: 0 };
@@ -39,4 +40,3 @@ ctx.fill();
         cycleCounter = 0;
   }
 }
-*/
