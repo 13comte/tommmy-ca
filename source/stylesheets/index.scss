@@ -1,13 +1,24 @@
+@import 'globals';
 /* Color variables */
 $dark: #3f3f3f;
 $highlight: #daff00;
 $inactive: #b4b4b4;
 /*
+Minimum widths
+*/
+$minPostHeight: 300px;
+$minPostWidth: 300px;
+$maxPostWidth: 1080px;
+
+/*
 General CSS setup for the site.
 */
+
+
+
 html {
   font-size: 100%;
-  box-sizing: border-box;
+  box-sizing: content-box;
   -webkit-font-smoothing: antialiased;
   margin: 0px;
   height: 100%;
@@ -32,7 +43,7 @@ body {
   width: 100%;
   height: 100%;
   background-color: #d9d9d9;
-  overflow: hidden;
+  overflow: auto;
 }
 
 ul {
@@ -49,15 +60,36 @@ a {
   color: $dark;
   text-align: none;
   text-decoration: none;
-  transition: border .6s;
+  word-wrap: nowrap;
+  white-space: nowrap;
 }
 
 a:hover {
   border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
   border: 3px solid $highlight;
-  animation: morphing 2s infinite ease-in;
+  animation: morphing 2s infinite ease-in-out;
 }
 
+p a {
+  text-align: none;
+  text-decoration: underline;
+  text-decoration-style: solid;
+  text-decoration-color: $highlight;
+  text-decoration-thickness: 0.1em;
+  border: 3px solid transparent;
+  position: relative;
+  left: -3px;
+}
+
+
+
+.codeBlock {
+  background-color: rgba(0,0,0,0.05);
+  color: $dark;
+  min-width: $minPostWidth;
+  padding-left: 2em;
+  overflow: auto;
+}
 @keyframes morphing {
   5% {
     border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
@@ -77,23 +109,65 @@ a:hover {
 /*# sourceMappingURL=index.css.map */
 
 .accordion {
-  max-width: 450px;
+  width: 20vw;
+  min-width: 300px;
+
   height: 100%;
   display: flex;
   flex-direction: row;
-  cursor: pointer;
-  margin-bottom: 100px;
+  position: sticky;
+  position: -webkit-sticky;
+  overflow: visible;
+  visibility: visible;
+  transition: visibility 0s linear;
 }
+
+
+
+@media screen and (min-width:100px) and (max-width: 800px) {
+ body {
+   flex-direction: column;
+   overflow: auto;
+   overflow-x: hidden;
+ }
+ 
+.accordion {
+display: none;
+}
+
+.pageWrap {
+  counter-reset: logCount;
+  counter-reset: figureCount;
+  padding-left: 25px;
+  padding-right : 25px;
+  overflow-x: none;
+}
+
+  .returnButton {
+    right:5vw;
+    bottom: 5vh;
+    margin: 0px 0px 0px 0px;
+  }
+}
+
+
+
+p {
+  font-size: 15px;
+}
+
+
 
 .box {
   position: relative;
   height: 100%;
   flex: 1;
-  transition: .7s;
-  margin: 0px 10px 0 0px;
+  transition: .7s ease-in-out;
+  margin: 0px 10px 0px 0px;
   padding-top: 10px;
+  padding-left: 10px;
   padding-right: 10px;
-  border-right: 1px solid $dark;
+  border-right: 1px dotted rgba(0,0,0,0.2);
   padding-bottom: 0;
   font-family: -apple-system, BlinkMacSystemFont, "HelveticaNeue", Helvetica, Arial, sans-serif;
   font-weight: 330;
@@ -103,10 +177,13 @@ a:hover {
   overflow: hidden;
   text-overflow: "   ";
   height: 100%;
+  position: sticky;
 }
 
 .box:hover{
+  font-weight: 400;
   flex: 7;
+  border-right: 1px solid $dark;
 }
 
 #box2 {
@@ -126,14 +203,36 @@ text-align: justify;
 }
 
 .boxLabel {
+  width: 100%;
   text-align: left;
   font-weight: 230;
   font-size: 12px;
 display: block;
-position: sticky;
+position: absolute;
 left: 0;
-top: 900px;
-bottom: 0;
+bottom: 25px;
+transition: all .2s ease-in-out;
+}
+.box:hover .boxLabel {
+  font-weight: 500;
+  bottom: 50px;
+  left: 60px;
+  animation: pushUp_Right .7s;
+}
+
+@keyframes pushUp_Right {
+  0% {
+    bottom: 25px;
+    left: 0;
+  }
+  24% {
+    bottom: 25px;
+    left: 0;
+  }
+  100% {
+    left: 60px;
+    bottom: 50px;
+  }
 }
 
 .logo {
@@ -152,25 +251,26 @@ bottom: 0;
     color:$dark;
   }
 }
-
-.container {
-  display: inline-flex;
-  height: 150%;
-  width: 100%;
-  margin: 0 auto;
-}
-
+@media screen and (min-width:500px) and (max-width: 5000px) {
 .pageWrap {
   width:100%;
   height: 100%;
-  overflow: scroll;
-  box-sizing: content-box; 
-  padding-right: 20px;
-  margin: 80px 0px 0px 80px;
+  overflow: visible;
+  box-sizing: border-box; 
+  /*margin: 80px 0px 0px 300px;*/
+  min-width: $minPostWidth;
+  display: flex;
+  flex-direction: column-reverse;
+  padding-left: 50px;
+  padding-right: 50px;
 }
-
+}
 .post {
-  min-height: 500px;
+  min-height: $minPostHeight;
+  min-width: $minPostWidth;
+  max-width: $maxPostWidth;
+  margin-bottom: 50px;
+  counter-increment: logCount;
 }
 
 .finePrint {
@@ -192,11 +292,16 @@ bottom: 0;
   animation:none;
 }
 
-ol {
+ol li a {
   overflow: hidden;
   text-overflow: "   ";
-  margin-left: -10px;
 }
+
+ol li a:hover{
+  font-size: 101%;
+}
+
+
 .projectTitle {
   letter-spacing: 1.5px;
 }
@@ -214,8 +319,9 @@ ol {
   width: 50px;
   height: 50px;
   position: fixed;
-  right:50;
-  bottom: 200;
+  right:1vw;
+  bottom: 10vh;
+  margin: 15px 15px 15px 15px;
   background-color: $highlight;
   border-color: $highlight;
   border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
@@ -227,11 +333,28 @@ ol {
 }
 
 .returnButton:hover {
+  width: 150px;
+  height: 150px;
+  padding: 35px;
   animation: morphing-noShadow 5s infinite ease-in-out;
+}
+.returnButton p::after {
+  content: "Take me home (no country roads)";
+  position: relative;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity .2s ease-in-out;
+  top: 15;
+}
+
+.returnButton:hover p::after {
+  opacity: 100%;
+  visibility: visible;
 }
 
 .grow { transition: all .1s ease-in-out; }
 .grow:hover { transform: scale(1.3); }
+
 
 @keyframes morphing-noShadow {
   5% {
@@ -246,4 +369,131 @@ ol {
   75% {
     border-radius: 33% 67% 58% 42% / 63% 68% 32% 37%;	
   }
+}
+
+#thisDiv {
+  overflow:hidden;
+}
+
+h1 {
+  font-size: 1em;
+  font-weight: 400;
+  text-align: center;
+  margin-top: 80;
+  padding: 0;
+}
+
+.post h2 {
+  margin-top: 30px;
+  font-size: 18px;
+  font-weight: 405;
+}
+.post h3::before {
+  content: "::: "
+}
+.post h3 {
+  font-size: 15px;
+  font-style: oblique;
+  font-weight: 405;
+  margin-left: 20px;
+  margin-top: 0px;
+}
+
+.postHeader {
+  text-align: center;
+  line-height: 50%;
+  padding: 5px 0px 25px 0px;
+  border-top: 1px dashed rgba(0,0,0,0.5);
+  color: $dark;
+  opacity: .6;
+  transition: opacity .2s ease-in-out;
+  position: sticky;
+  top: 0;
+  background: linear-gradient(180deg, rgba(217,217,217,1) 0%, rgba(217,217,217,1) 57%, rgba(217,217,217,0) 100%);
+}
+.postHeader:hover {
+  color: $dark;
+  opacity: 1;
+}
+.logID {
+  height: 50px;
+}
+.logID::after {
+  content: 'Log 'counter(logCount)'\A';
+  white-space: pre;
+  line-height: 150%;
+  font-size: 1em;
+  font-weight: 400;
+}
+.postDate {
+  line-height: 100%;
+  font-size: .8em;
+}
+
+.pictureFrame {
+  position: relative;
+  height:auto;
+  width: 95%;
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: space-evenly;
+}
+figure {
+  width: 50%;
+  height: auto;
+  font-size: 12px;
+  align-self: flex-end;
+  counter-increment: figureCount;
+}
+
+.pictureFrame img {
+  min-width: 120px;
+  max-width: 350px;
+  max-height: 300px;
+  display: flex;
+  margin: 0 auto;
+  align-self: center;
+}
+figcaption::before {
+  content: 'Fig.' counter(figureCount)"  -  ";
+  font-weight: 500;
+
+}
+figcaption {
+  margin: auto;
+  padding-top: 15px;
+  font-style: oblique;
+  text-align: center;
+  align-self: center;
+}
+
+/*
+img {
+  display: flex;
+  min-width: 250px;
+  max-width: 500px;
+  max-height: 300px;
+  height: inherit;
+  width: 50%;
+  height: 50%;
+  align-self: center;
+  padding: 3vw;
+  flex-wrap: wrap;
+}
+*/
+
+.flexbox-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  overflow: auto;
+}
+.regular {
+  height: 100%;
+}
+.sticky {
+  position: -webkit-sticky; /* for Safari */
+  position: sticky;
+  top: 0;
+  align-self: flex-start; /* <-- fix for problem with sticky div not working with flexbox */
 }

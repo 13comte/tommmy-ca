@@ -1,95 +1,153 @@
-            <html>
-               <head>
-                  <meta charset="utf-8">
-                  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-                  <title>TOMMY LECOMTE</title>
-                  <meta name="description" content="">
-                  <meta name="viewport" content="width=device-width, initial-scale=1">
-                  <link rel="stylesheet" href="source/stylesheets/index.css"/>
-                  <link rel="stylesheet" href="https://unpkg.com/kursor/dist/kursor.css">
-               </head>
-               <body>
-
-<div class="returnButton grow">
-   <p>&#8592</p>
-</div>
 
 
-   <div class="container">
-    <div class="accordion">
-        <!-- BOX 1 -->
-        <div class="box metaCategories">
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>TOMMY LECOMTE</title>
+      <link rel="icon" type="image/x-icon" href="/tommmy-ca/media/images/favicon/favicon.png">
+      <meta name="description" content="">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="source/stylesheets/index.css"/>
+      <!--
+         <link rel="stylesheet" href="https://unpkg.com/kursor/dist/kursor.css">
+         -->
+      <link rel="stylesheet"
+         href="//unpkg.com/@highlightjs/cdn-assets@11.4.0/styles/default.min.css">
+      <script src="//unpkg.com/@highlightjs/cdn-assets@11.4.0/highlight.min.js"></script>
+      <!--  -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script>
+         MathJax = {
+           tex: {
+             inlineMath: [['$', '$'], ['\\(', '\\)']]
+           },
+           svg: {
+             fontCache: 'global'
+           }
+         };
+      </script>
+      <script type="text/javascript" id="MathJax-script" async
+         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+   </head>
+   <body>
+      <div class="returnButton grow">
+         <p id="arrow">&#8592</p>
+      </div>
+   <div class="flexbox-wrapper">
+      <div class="accordion sticky">
+      <!-- BOX 1 -->
+      <div class="box metaCategories">
          <ul>
-            <li><a href="default.asp" class="activeLink">IMCA-322</a></li>
-            <li><a href="news.asp">IMCA-332</a></li>
+            <li><a href="default.asp" class="activeLink">IMCA322</a></li>
+            <li><a href="news.asp">IMCA332</a></li>
             <br><br>
             <div class="inactive">
-            <span class="finePrint">Currently Inactive</span>
-            <li><a href="/">ARTH-354</a></li>
-            <li><a href="/">ARTH-355</a></li>
-            <li><a href="/">FBRS-397</a></li>
-            </span>
-          </ul> 
-           <span class="boxLabel" id="box1-label">Course Name</span>
-        </div>
+               <span class="finePrint">Currently Inactive</span>
+               <li><a>ARTH354</a></li>
+               <li><a>ARTH355</a></li>
+               <li><a>FBRS397</a></li>
+               </span>
+         </ul>
+         <span class="boxLabel" id="box1-label">Course Name</span>
+         </div>
+         <!-- BOX 2 -->
+         <div class="box subCategory" id="box2">
+            <span class="boxLabel" id="box2-label">Directory</span>
+         </div>
+         <!-- BOX 3 -->
+         <div class="box subCategory">
+            >>
+            <br>
+            <span class="boxLabel" id="box3-label">Contents</span>
+         </div>
+      </div>
+      <div class="pageWrap regular">
+         <div class="post" id="log1">
+            <div class="postHeader">
+               <span class="logID"></span>
+               <span class="postDate">January 14, 2022</span>
+               </div>
+            <h2>A small note on compiling OpenLB programs on Mac M1 Pro CPU using clang</h2>
+            <p>OpenLB is aimed to use GCC compiler which no longer supported on MacOS, the gcc command acts as an alias/loader for clang. This causes a slight incompatibility with the included examples.</p>
+            <p>Attempting to compile a simulation with OpenLB using clang on Mac M1 Pro architecture returns the following error:</p>
+            <div class="codeBlock">
+               <pre>
+      <code>
+[cylinder2d] make 
+make[1]: Entering directory '/Users/lecom/olb-1.4r0/examples/laminar/cylinder2d'
+make[2]: Entering directory '/Users/lecom/olb-1.4r0'
+g++ -O3 -Wall --=native -mtune=native -std=c++14 -DTIXML_USE_STL -I./src -I./src/ 
+-I./src/external -I./src/external/zlib -c src/communication/loadBalancer.cpp 
+-o build/generic/obj/src/communication/loadBalancer.o
+clang: error: unsupported option '--=native'
+make[2]: *** [Makefile:76: build/generic/obj/src/communication/loadBalancer.o] Error 1
+make[2]: Leaving directory '/Users/lecom/olb-1.4r0'
+make[1]: *** [Makefile:91: updatelib] Error 2
+make[1]: Leaving directory '/Users/lecom/olb-1.4r0/examples/laminar/cylinder2d'
+make: *** [Makefile:37: all] Error 2
+</code>
+</pre>
+            </div>
+            <p>This can be solved by removing the —native flag on line 33 of the included config files. Clang can then compile the examples smoothly, which can be run and output the data into a tmp directory. </p>
+            <h2>Making a first velocity/flow simulation with a custom 3D model</h2>
+            <p>
+               The first step in creating a simulation is to create the geometry. 
+               In my case, this was done by creating the outlines in Adobe llustrator and exporting the file as a vector graphic (.SVG). I then imported it into AutoDesk Fusion 360 -- although any 3D software would work but for something so simple there really would be no point to opening it in something like Rhino and Blender lacks precision when it comes to measurements--. 
+               The outlines are then extruded (1.5mm) and the resulting mesh is exported as an STL file. 
+               This file can then be imported and handled by OpenLB directly.
+               The process is explained in more detail in the OpenLB User Guide <a href="https://www.openlb.net/wp-content/uploads/2020/12/olb_ug-1.4r0.pdf#section.5.1">(Section 5.1)</a>
+            </p>
+            <div class="pictureFrame">
+               <figure>
+                  <img src="/tommmy-ca/media/images/AND_gate-2.svg">
+                  <figcaption>Source path created in Illustrator </figcaption>
+               </figure>
+               <figure>
+                  <img src="/tommmy-ca/media/images/3D_AND_gate-2.svg">
+                  <figcaption>The geometry extruded from the path </figcaption>
+               </figure>
+            </div>
+            <h2>Formatting equations using LaTex and MathJax</h2>
+            <p>In order to properly document my research on this website I had to figure out an option for 
+               formatting mathematical equations for the web, as I felt it would counterproductive to constantly create svg files for each equation
+               and insert them as images every time. The best solution I found used <a href="https://docs.mathjax.org/en/latest/">MathJax</a>, which is a javascript library that allows me to insert
+               the equations right into the html file. <br><br>
+               Here is an example of LaTex for a Navier-Stokes equation & the collision step of the LBM algorithm:
+            </p>
+            <div class="codeBlock">
+<pre><code>$$\rho\left(\frac{\partial u}{\partial t}+(u\cdot\nabla)u\right)=-\nabla p+\eta\nabla^2u+f$$
 
-        <!-- BOX 2 -->
-        <div class="box subCategory" id="box2">
-           <span class="projectTitle">Fluidic logic:<br> Physical computation</span>
-         <ol>
-            <li><a href="default.asp" class="activeLink">Abstract</a></li>
-            <li><a href="news.asp">Research</a></li>
-            <li><a href="news.asp">Logs</a></li>
-            <li><a href="news.asp">Files</a></li>
-            <li><a href="news.asp">Links & other madness</a></li>
-          </ol> 
-         <span class="boxLabel" id="box2-label">Directory</span>
-        </div>
+$$f_{i}\vec{x}^{\,t}+\delta_{t}=f_{i}\vec{x}^{\,t}+\frac{f_{i}^{eq}(\vec{x}^{\,t})-f_{i}(\vec{x}^{\,t})}{\tau_{f}}$$
+</code></pre>
+            </div>
+            <p>And the corresponding formatted SVG output:</p>
+            $$\rho\left(\frac{\partial u}{\partial t}+(u\cdot\nabla)u\right)=-\nabla p+\eta\nabla^2u+f $$
+            $$f_{i}\vec{x}^{\,t}+\delta_{t}=f_{i}\vec{x}^{\,t}+\frac{f_{i}^{eq}(\vec{x}^{\,t})-f_{i}(\vec{x}^{\,t})}{\tau_{f}}$$
+         </div>
+         <div class="post" <id="log2">
+            <div class="postHeader">
+               <span class="logID"></span>
+               <span class="postDate">January 14, 2022</span>
+               </div>
+            <h2>On the Lattice Boltzmann Method</h2>
+            <h3>Navier-Stoke equations</h3>
+            <p>
+               The Navier-Stokes equations are a set of equations that describe the flow of fluid in a fluid-solid interface.
+               The equations are:
+               Nonlinear in <b>u</b>:
+               $$\rho\left(\frac{\partial u}{\partial t}+(u\cdot\nabla)u\right)=-\nabla p+\eta\nabla^2u+f$$
+               $$f_{i}\vec{x}^{\,t}+\delta_{t}=f_{i}\vec{x}^{\,t}+\frac{f_{i}^{eq}(\vec{x}^{\,t})-f_{i}(\vec{x}^{\,t})}{\tau_{f}}$$
+            </p>
 
-        <!-- BOX 3 -->
-        <div class="box subCategory">
-           >>
-           <br>
-           <span class="boxLabel" id="box3-label">Contents</span>
-        </div>
-
-    </div>
-
-<div class="pageWrap">
-   <div class="post">
-      testadding content using a js file
+         </div>
+      </div>
    </div>
+   </body>
+   <!-- Cursor styling scripts 
+      <script src="https://unpkg.com/kursor"></script>
+      <script type="module" defer src="source/scripts/styling.js"></script>
+      -->
+</html>
 
-   <div class="post">
-      testadding content using a js file
-   </div>
-   
-   <div class="post">
-      testadding content using a js file
-   </div>
-
-   <div class="post">
-      testadding content using a js file
-   </div>
-
-   <div class="post">
-      testadding content using a js file
-   </div>
-
-   <div class="post">
-      testadding content using a js file
-   </div>
-
-</div>
-
-   </div>
-
-               </body>
-
-
-               <!-- Cursor styling scripts -->
-               <script src="https://unpkg.com/kursor"></script>
-               <script type="module" defer src="source/scripts/styling.js"></script>
-
-
-               </html>

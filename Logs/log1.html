@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>TOMMY LECOMTE</title>
+      <meta name="description" content="">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="../source/stylesheets/index.css"/>
+      <link rel="stylesheet" href="https://unpkg.com/kursor/dist/kursor.css">
+
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+   </head>
+   <body>
+       <div class="post" id="log1">
+            <h3 id="a-note-on-compiling-openlb-programs-on-mac-m1-pro-cpu-using-clang">A note on compiling OpenLB programs on Mac M1 Pro CPU using clang</h3>
+            <p>OpenLB is aimed to use GCC compiler which no longer supported on MacOS, the gcc command acts as an alias/loader for clang. This causes a slight incompatibility with the included examples.</p>
+            <p>Attempting to compile a simulation with OpenLB using clang on Mac M1 Pro architecture returns the following error:</p>
+            <pre>
+                <code>
+                    [cylinder2d] make 
+                    make[1]: Entering directory '/Users/lecom/olb-1.4r0/examples/laminar/cylinder2d'
+                    make[2]: Entering directory '/Users/lecom/olb-1.4r0'
+                    g++ -O3 -Wall --=native -mtune=native -std=c++14 -DTIXML_USE_STL -I./src -I./src/ 
+                    -I./src/external -I./src/external/zlib -c src/communication/loadBalancer.cpp 
+                    -o build/generic/obj/src/communication/loadBalancer.o
+                    clang: error: unsupported option '--=native'
+                    make[2]: *** [Makefile:76: build/generic/obj/src/communication/loadBalancer.o] Error 1
+                    make[2]: Leaving directory '/Users/lecom/olb-1.4r0'
+                    make[1]: *** [Makefile:91: updatelib] Error 2
+                    make[1]: Leaving directory '/Users/lecom/olb-1.4r0/examples/laminar/cylinder2d'
+                    make: *** [Makefile:37: all] Error 2
+                </code>
+            </pre>
+            <p>This can be solved by removing the —native flag on line 33 of the included config files. Clang can then compile the examples smoothly, which can be run and output the data into a tmp directory. </p>
+            <h3 id="making-a-fist-velocity-flow-simulation-with-a-custom-3d-model">Making a fist velocity/flow simulation with a custom 3D model</h3>
+       </div>
+   </body>
+   </html>
