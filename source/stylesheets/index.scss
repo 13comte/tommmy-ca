@@ -24,6 +24,8 @@ html {
   height: 100%;
   width: 100%;
   scroll-behavior: smooth;
+  scrollbar-width: none;
+  overflow: hidden;
 }
 
 *,
@@ -43,7 +45,9 @@ body {
   width: 100%;
   height: 100%;
   background-color: #d9d9d9;
-  overflow: auto;
+  overflow: hidden;
+  scrollbar-width: none;
+  scrollbar-visible: false;
 }
 
 ul {
@@ -126,6 +130,8 @@ p a {
 
 @media screen and (min-width:100px) and (max-width: 800px) {
  body {
+  counter-reset: logCount;
+  counter-reset: figureCount;
    flex-direction: column;
    overflow: auto;
    overflow-x: hidden;
@@ -133,14 +139,6 @@ p a {
  
 .accordion {
 display: none;
-}
-
-.pageWrap {
-  counter-reset: logCount;
-  counter-reset: figureCount;
-  padding-left: 25px;
-  padding-right : 25px;
-  overflow-x: none;
 }
 
   .returnButton {
@@ -253,26 +251,29 @@ transition: all .2s ease-in-out;
 }
 @media screen and (min-width:500px) and (max-width: 5000px) {
 .pageWrap {
-  width:100%;
   height: 100%;
-  overflow: visible;
-  box-sizing: border-box; 
-  /*margin: 80px 0px 0px 300px;*/
-  min-width: $minPostWidth;
-  display: flex;
-  flex-direction: column-reverse;
-  padding-left: 50px;
-  padding-right: 50px;
-}
-}
-.post {
-  min-height: $minPostHeight;
-  min-width: $minPostWidth;
-  max-width: $maxPostWidth;
-  margin-bottom: 50px;
-  counter-increment: logCount;
+  width: 100%;
+flex-direction: column-reverse;
+position: relative;
+top: 0;
+left: 0;
 }
 
+.post {
+width: 80%;
+padding: 5px;
+word-break: break-all;
+display: block;
+margin: 0 auto;
+flex-shrink: 0;
+overflow:hidden;
+counter-increment: logCount;
+}
+#log2 {
+  background-color: red;
+  color: white;
+}
+}
 .finePrint {
   position: relative;
   margin-top: 50px;
@@ -388,10 +389,10 @@ h1 {
   font-size: 18px;
   font-weight: 405;
 }
-.post h3::before {
+h3::before {
   content: "::: "
 }
-.post h3 {
+h3 {
   font-size: 15px;
   font-style: oblique;
   font-weight: 405;
@@ -496,4 +497,131 @@ img {
   position: sticky;
   top: 0;
   align-self: flex-start; /* <-- fix for problem with sticky div not working with flexbox */
+}
+
+.samplesData p {
+  line-height: 50%;
+  text-overflow: wrap;
+  font-size: .9em;
+  line-height: 1.5em;
+}
+
+.samplesData span {
+  white-space: nowrap;
+  font-size: .8em;
+  font-weight: 500;
+  width: 100px;
+  display: inline-flex;
+  margin-left: 3vw;
+}
+
+span.emptyFill {
+  display:inline-block;
+  overflow:hidden;
+  width:10%;
+  height:1px;
+  margin-left: 5px;
+  margin-right: 5px;
+  align-self:center;
+  background-color: rgba(0,0,0,0.1);
+  transition: width .4s ease-in-out, background-color .2s ease-in-out;
+}
+
+span:hover > span.emptyFill {
+  width: 100%;
+  background-color: $dark;
+}
+
+#pageContent {
+  width:70%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 500px;
+  padding: 20px;
+}
+
+#pageContent h3 {
+  margin-top: 20px !important;
+  margin-bottom: 0;
+  margin-left: 0px;
+}
+
+.samplesData {
+  width: 100%;
+
+  text-align: justify;
+
+}
+
+
+.videoFrame {
+width: 100%;
+height: 100%;
+overflow: hidden;
+
+}
+
+video {
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+  display: flex;
+}
+
+.break {
+  flex-basis: 100%;
+  height: 0;
+}
+
+.documentsFrame{
+  width: 100%;
+  height: 150vh;
+  display: flex;
+  flex-direction: column;
+  margin-left: 0;
+  overflow-x: hidden;
+  overflow-y: visible;
+
+}
+
+iframe {
+height: 100%;
+width: 100%;
+}
+
+#outerContainer #mainContainer div.toolbar {
+  display: none !important; /* hide PDF viewer toolbar */
+}
+#outerContainer #mainContainer #viewerContainer {
+  top: 0 !important; /* move doc up into empty bar space */
+}
+
+.toolbar {
+  display: none !important; /* hide PDF viewer toolbar */
+}
+
+.floatingNav {
+  width: 10vw;
+  height: 250px;
+  position: fixed;
+bottom: 50;
+  right: 0;
+  z-index: 1000000000;
+  color: rgba(0,0,0,0.2);
+  transition: color .2s ease-in-out, font-weight .2s ease-in-out;
+  text-align: center;
+
+}
+.floatingNav a {
+  color: inherit;
+}
+
+.floatingNav:hover {
+  color: rgba(0,0,0,0.5);
+}
+
+#outerContainer {
+  background-color: #d9d9d9;
 }

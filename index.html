@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <title>TOMMY LECOMTE</title>
-      <link rel="icon" type="image/x-icon" href="/tommmy-ca/media/images/favicon/favicon.png">
+      <link rel="icon" type="image/x-icon" href="media/images/favicon/favicon.png">
       <meta name="description" content="">
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <link rel="stylesheet" href="source/stylesheets/index.css"/>
@@ -63,7 +63,7 @@
             <span class="boxLabel" id="box3-label">Contents</span>
          </div>
       </div>
-      <div class="pageWrap regular">
+      <div class="pageWrap flexbox-wrapper">
          <div class="post" id="log1">
             <div class="postHeader">
                <span class="logID"></span>
@@ -101,11 +101,11 @@ make: *** [Makefile:37: all] Error 2
             </p>
             <div class="pictureFrame">
                <figure>
-                  <img src="/tommmy-ca/media/images/AND_gate-2.svg">
+                  <img src="media/images/AND_gate-2.svg">
                   <figcaption>Source path created in Illustrator </figcaption>
                </figure>
                <figure>
-                  <img src="/tommmy-ca/media/images/3D_AND_gate-2.svg">
+                  <img src="media/images/3D_AND_gate-2.svg">
                   <figcaption>The geometry extruded from the path </figcaption>
                </figure>
             </div>
@@ -131,16 +131,41 @@ $$f_{i}\vec{x}^{\,t}+\delta_{t}=f_{i}\vec{x}^{\,t}+\frac{f_{i}^{eq}(\vec{x}^{\,t
                <span class="logID"></span>
                <span class="postDate">January 14, 2022</span>
                </div>
-            <h2>On the Lattice Boltzmann Method</h2>
-            <h3>Navier-Stoke equations</h3>
+            <h2>On fluid dynamics</h2>
+            <h3> Probability distribution functions</h3>
             <p>
-               The Navier-Stokes equations are a set of equations that describe the flow of fluid in a fluid-solid interface.
-               The equations are:
-               Nonlinear in <b>u</b>:
-               $$\rho\left(\frac{\partial u}{\partial t}+(u\cdot\nabla)u\right)=-\nabla p+\eta\nabla^2u+f$$
-               $$f_{i}\vec{x}^{\,t}+\delta_{t}=f_{i}\vec{x}^{\,t}+\frac{f_{i}^{eq}(\vec{x}^{\,t})-f_{i}(\vec{x}^{\,t})}{\tau_{f}}$$
-            </p>
+               $$\xi = \frac{dx}{dt} =  $$
+               This function indicates that xi ($\xi$) is the molecular velocity.<br>
+               <h4>important properties of $f(\xi,x,t)$ </h4>
+               <ul>
+                  <ul>
+                     <li>$\int d^{3}\xi\int d^{3}\cdot f(\xi,x,t)=M(t)$</li>
+                     <br>
+                     <li>$\int d^{3}\xi f(\xi,x,t)=\rho(x,t)$</li>
+                     <br>
+                     <li>$\int d^{3}\xi\xi f(\xi, x, t)=\rho u(x,t)$</li>
 
+               </ul>
+               These statements describe continuum mechanics on a kinetic level.
+            </p>
+            <p>
+               <ul>
+                  <li>Time: $x\rightarrow\Delta t$<br></li>
+                  <li>Space: $x\rightarrow\Delta x$(lattice)<br></li>
+                  <li>Velocity space: $f(v,x,t)\rightarrow f_{i}(x,t)$<br></li>
+               </ul>
+               <br>
+            Navier Stokes equations only need velocity moments of f(v,x,t) to be computed:
+            $\int d^{3}vf(v,x,t)=\rho(x,t), \int d^{3}vvf(v,x,t) =\rho u(x,t)$
+
+            <br>
+            <br>
+            <h3>Discrete velocity Sets</h3>
+            <p>
+               The discrete velocity set is a set of discrete velocities that can be used to describe the flow of a fluid.
+               Common examples of velocity sets are D2Q9 for two dimensions and D3Q19 for three dimensions.
+               These statements describe continuum mechanics on a kinetic level.
+         </p>
          </div>
       </div>
    </div>
