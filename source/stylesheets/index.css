@@ -306,6 +306,11 @@ p {
     counter-increment: logCount;
   }
 
+img {
+    mix-blend-mode: multiply;
+    background-blend-mode: multiply;
+  }
+
   #log2 {
     background-color: red;
     color: white;
